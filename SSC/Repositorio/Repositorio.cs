@@ -27,6 +27,5 @@ namespace SSC.Repositorio
             return await Contexto.Set<T>().ToListAsync();
         }
 
-
     }
 }

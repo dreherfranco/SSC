@@ -10,16 +10,16 @@ namespace SSC.Servicios
 {
     public class ServicioCurso
     {
-        private Repositorio<ServicioCurso> Repositorio;
+        private RepositorioCurso Repositorio;
         public ServicioCurso()
         {
-            Repositorio = new Repositorio<ServicioCurso>();
+            Repositorio = new RepositorioCurso();
         }
 
-     /*   public async Task<Curso> ObtenerUnCurso(string nombreCurso)
+        public async Task<Curso> ObtenerUnCurso(string nombreCurso)
         {
-            var cursos = this.Repositorio.Obtener();
+            return await this.Repositorio.ObtenerUnCurso(nombreCurso);
 ;
-        }*/
+        }
     }
 }
