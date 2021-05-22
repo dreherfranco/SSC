@@ -14,9 +14,9 @@ namespace SSC.Repositorio
         { 
         }
 
-        public async Task<Curso> ObtenerUnCurso(string nombre)
+        public Curso ObtenerUnCurso(string nombre)
         {
-           return await Contexto.Cursos.FirstOrDefaultAsync(x => x.Nombre == nombre);
+           return Contexto.Cursos.FirstOrDefault(x => x.Nombre == nombre);
         }
 
     }

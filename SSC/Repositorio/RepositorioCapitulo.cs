@@ -14,11 +14,11 @@ namespace SSC.Repositorio
         {
         }
 
-        public async Task<List<Capitulo>> ObtenerTodosLosCapitulosDeUnCurso(string nombreCurso)
+        public List<Capitulo> ObtenerTodosLosCapitulosDeUnCurso(string nombreCurso)
         {
-            return await this.Contexto.Capitulos
-                .Where(x => x.NombreCurso == nombreCurso)
-                .ToListAsync() ;
+            return  this.Contexto.Capitulos
+                .Where(x => x.Curso.Nombre == nombreCurso)
+                .ToList() ;
         }
     }
 }

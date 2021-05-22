@@ -17,25 +17,78 @@ namespace SSC.DbConfiguration
 
         public ApplicationDbContext() : base() { }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer(@"Data Source=.\SQLEXPRESS_2019;Initial Catalog=SSC;Integrated Security=True");
+            =>options.UseLazyLoadingProxies().UseSqlServer(@"Data Source=.\SQLEXPRESS_2019;Initial Catalog=SSC;Integrated Security=True");
 
+      
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Curso>()
-                .HasKey(x => new { x.Nombre });
+                .HasKey(x => new { x.Id });
+            
+            modelBuilder.Entity<Curso>()
+                .HasMany(x => x.EvaluacionesPracticas)
+                .WithOne(x => x.Curso)
+                .HasForeignKey(x => x.CursoId);
+
+            modelBuilder.Entity<Curso>()
+                .HasMany(x => x.EvaluacionesTeoricas)
+                .WithOne(x => x.Curso)
+                .HasForeignKey(x => x.CursoId);
 
             modelBuilder.Entity<EvaluacionPractica>()
-                .HasKey(x => new { x.NumeroEvaluacion });
+                .HasKey(x => new { x.Id });
+
             modelBuilder.Entity<EvaluacionTeorica>()
-                .HasKey(x => new { x.NumeroEvaluacion });
-            //SeedData(modelBuilder);
+                .HasKey(x => new { x.Id });
+
+            modelBuilder.Entity<Capitulo>()
+                .HasKey(x => new { x.Id });
+            modelBuilder.Entity<Capitulo>()
+                .HasOne(x => x.Curso)
+                .WithMany(x=> x.Capitulos);
+
+
+            //inserto data de prueba
+            SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
 
-       // private void SeedData(ModelBuilder modelBuilder)
-      //  {
-            //CREAR DATA DE PRUEBA
-      //  }
+        private void SeedData(ModelBuilder modelBuilder)
+        {
+            var cursoNetCore = new Curso { Id=1, Costo = 2000, Instructor = "Emanuel Goette", Nombre = "NetCore" };
+            var cursoPhp = new Curso {Id=2, Costo = 1500, Instructor = "Emanuel Goette", Nombre = "Php" };
+
+            var capitulo1NetCore = new Capitulo {Id=1, CursoId = cursoNetCore.Id, Descripcion = "capitulo 1 del curso de net core", Tema = "POO" };
+            var capitulo2NetCore = new Capitulo {Id=2, CursoId =cursoNetCore.Id, Descripcion = "capitulo 2 del curso de net core", Tema = "AutoMapper" };
+            var capitulo1Php = new Capitulo {Id=3, CursoId = cursoPhp.Id, Descripcion = "cap 1 curso PHP", Tema = "Variables" };
+
+            var evaluacionTeoricaNetCore = new EvaluacionTeorica { Id=1,NumeroEvaluacion=1,Calificacion = 68, CursoId = 1 };
+            var evaluacionPracticaNetCore = new EvaluacionPractica { Id=1,NumeroEvaluacion=2,Aprobado = true, CursoId = 1 };
+
+            modelBuilder.Entity<Curso>()
+                .HasData( new List<Curso>()
+                {
+                    cursoNetCore, cursoPhp
+                });
+
+            modelBuilder.Entity<Capitulo>()
+                .HasData( new List<Capitulo>()
+                {
+                    capitulo1NetCore,capitulo2NetCore,capitulo1Php
+                });
+
+            modelBuilder.Entity<EvaluacionTeorica>()
+               .HasData(new List<EvaluacionTeorica>()
+               {
+                    evaluacionTeoricaNetCore
+               });
+
+            modelBuilder.Entity<EvaluacionPractica>()
+              .HasData(new List<EvaluacionPractica>()
+              {
+                    evaluacionPracticaNetCore
+              });
+        }
 
     }
 }

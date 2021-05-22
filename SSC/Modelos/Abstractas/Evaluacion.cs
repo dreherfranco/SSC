@@ -9,8 +9,9 @@ namespace SSC.Modelos.Abstractas
 {
     public abstract class Evaluacion
     {
-        [Key]
+        
+        public int Id { get; set; }
         public int NumeroEvaluacion { get; set; }
-        public string NombreCurso { get; set; }
+        public int CursoId { get; set; }
     }
 }

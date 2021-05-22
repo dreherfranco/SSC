@@ -10,11 +10,12 @@ namespace SSC.Modelos
 {
     public class Curso
     {
-        [Key]
+        public int Id { get; set; }
         public string Nombre { get; set; }
         public string Instructor { get; set; }
-        public List<Capitulo> Capitulos { get; set; }
-        public List<EvaluacionPractica> EvaluacionesPracticas { get; set; }
-        public List<EvaluacionTeorica> EvaluacionesTeoricas { get; set; }
+        public float Costo { get; set; }
+        public virtual List<Capitulo> Capitulos { get; set; }
+        public virtual List<EvaluacionPractica> EvaluacionesPracticas { get; set; }
+        public virtual List<EvaluacionTeorica> EvaluacionesTeoricas { get; set; }
     }
 }

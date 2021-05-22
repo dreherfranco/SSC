@@ -14,6 +14,6 @@ namespace SSC.Modelos
             
         }
         public bool Aprobado { get; set; }
-        public Curso Curso { get; set; }
+        public virtual Curso Curso { get; set; }
     }
 }

@@ -1,5 +1,4 @@
-﻿using SSC.Modelos;
-using SSC.Modelos.Abstractas;
+﻿using SSC.Servicios;
 using System;
 
 namespace SSC
@@ -9,8 +8,25 @@ namespace SSC
         static void Main(string[] args)
         {
             Console.WriteLine("0: Mostrar Cursos \n1:Cargar un nuevo Curso \n2:Cargar Capitulos a un curso\n3:Cargar Evaluaciones a un curso \n4:Salir");
-           
-            
+
+            var servicioCurso = new ServicioCurso();
+            var cursos = servicioCurso.ObtenerTodos();
+            foreach (var curso in cursos)
+            {
+                Console.WriteLine($"nombre: {curso.Nombre}\ncosto: {curso.Costo}");
+                foreach (var capitulo in curso.Capitulos)
+                {
+                    Console.WriteLine($"\ncapitulo: {capitulo.Tema}, Descripcion: {capitulo.Descripcion}");
+                }
+                foreach (var evaluacionPractica in curso.EvaluacionesPracticas)
+                {
+                    Console.WriteLine($"\nsituacion: {(evaluacionPractica.Aprobado ? "aprobado" : "desaprobado")}");
+                }
+                foreach (var evaluacionTeorica in curso.EvaluacionesTeoricas)
+                {
+                    Console.WriteLine($"\ncalificacion: {evaluacionTeorica.Calificacion}, nroEvaluacion: {evaluacionTeorica.NumeroEvaluacion}");
+                }
+            }
             int leer = Console.Read();
             while (leer != 4)
             {

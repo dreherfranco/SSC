@@ -16,15 +16,15 @@ namespace SSC.Repositorio
             Contexto = new ApplicationDbContext();
         }
 
-        public async Task Agregar(T entity)
+        public void Agregar(T entity)
         {
             Contexto.Set<T>().Add(entity);
-            await Contexto.SaveChangesAsync();
+            Contexto.SaveChangesAsync();
         }
 
-        public async Task<List<T>> ObtenerTodos()
+        public List<T> ObtenerTodos()
         { 
-            return await Contexto.Set<T>().ToListAsync();
+            return Contexto.Set<T>().ToList();
         }
 
     }

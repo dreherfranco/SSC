@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace SSC.Servicios
 {
-    public class ServicioCurso
+    public class ServicioCurso: Servicio<Curso>
     {
-        private RepositorioCurso Repositorio;
+        private readonly RepositorioCurso Repositorio;
         public ServicioCurso()
         {
             Repositorio = new RepositorioCurso();
         }
 
-        public async Task<Curso> ObtenerUnCurso(string nombreCurso)
+        public Curso ObtenerUnCurso(string nombreCurso)
         {
-            return await this.Repositorio.ObtenerUnCurso(nombreCurso);
+            return this.Repositorio.ObtenerUnCurso(nombreCurso);
 ;
         }
     }
