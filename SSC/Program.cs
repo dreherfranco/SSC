@@ -1,4 +1,5 @@
-﻿using SSC.Servicios;
+﻿using SSC.Modelos;
+using SSC.Servicios;
 using System;
 
 namespace SSC
@@ -9,70 +10,103 @@ namespace SSC
         {
             Console.WriteLine("0: Mostrar Cursos \n1:Cargar un nuevo Curso \n2:Cargar Capitulos a un curso\n3:Cargar Evaluaciones a un curso \n4:Salir");
 
-            var servicioCurso = new ServicioCurso();
-            var cursos = servicioCurso.ObtenerTodos();
-            foreach (var curso in cursos)
-            {
-                Console.WriteLine($"nombre: {curso.Nombre}\ncosto: {curso.Costo}");
-                foreach (var capitulo in curso.Capitulos)
-                {
-                    Console.WriteLine($"\ncapitulo: {capitulo.Tema}, Descripcion: {capitulo.Descripcion}");
-                }
-                foreach (var evaluacionPractica in curso.EvaluacionesPracticas)
-                {
-                    Console.WriteLine($"\nsituacion: {(evaluacionPractica.Aprobado ? "aprobado" : "desaprobado")}");
-                }
-                foreach (var evaluacionTeorica in curso.EvaluacionesTeoricas)
-                {
-                    Console.WriteLine($"\ncalificacion: {evaluacionTeorica.Calificacion}, nroEvaluacion: {evaluacionTeorica.NumeroEvaluacion}");
-                }
-            }
+            
             int leer = Console.Read();
+            var servicioCursos = new ServicioCurso();
             while (leer != 4)
             {
                 switch (leer)
                 {
                     case 0:
-                        //var servicioCursos = new ServicioCursos();
-                        //cursos = servicioCursos.getCursos();
+                        
+                        var cursos = servicioCursos.ObtenerTodos();
                         //muestro cursos
+                        foreach(var curso in cursos)
+                        {
+                            Console.WriteLine($"\nNombre curso:{curso.Nombre}\tInstructor:{curso.Instructor}");
+                        }
                         break;
                     case 1:
-                        // Console.WriteLine("\nIngrese el nombre del curso: ");
-                        // string nombreCurso = Console.ReadLine();
-                        // Console.WriteLine("\nIngrese nombre del instructor: ");
-                        // string instructor = Console.ReadLine();
-                        // var servicioCurso = new ServicioCursos();
-                        //servicioCurso.Agregar(nombreCurso, instructor);
+                         Console.WriteLine("\nIngrese el nombre del curso: ");
+                         string nombreCurso = Console.ReadLine();
+                         Console.WriteLine("\nIngrese nombre del instructor: ");
+                         string instructor = Console.ReadLine();
+                        Console.WriteLine("\nIngrese costo del curso: ");
+                        float costo = Console.Read();
+
+                        servicioCursos.Agregar(new Curso() { Nombre = nombreCurso, Instructor=instructor, Costo=costo});
                         break;
                     case 2:
-                        //LISTAR CURSOS
-                        //var servicioCursos = new ServicioCursos();
-                        //cursos = servicioCursos.getCursos();
+                        //LISTAR CURSOS                    
+                        cursos = servicioCursos.ObtenerTodos();
+                        
+                        Console.WriteLine("\nIdCurso\tNombreCurso ");
+                        for(int i=0; i<cursos.Count ;i++){
+                            Console.WriteLine($"\n{i}\t{cursos[i].Nombre} ");
+                        }
 
-                        // Console.WriteLine("IdCurso\tNombreCurso ");
-                        //for(int i=0; i<cursos.Count ;i++){
-                        // Console.WriteLine($"\n{i}\tcursos[i].Nombre ");
-                        //}
+                        int idCurso;
+                        do
+                        {
+                            Console.WriteLine("\nIngrese el id del curso al cual quiere agregar un capitulo: ");
+                            idCurso = Console.Read();
+                        } while (idCurso < 0 || idCurso > cursos.Count);
+                       
+                         Console.WriteLine("\nTema del capitulo : ");
+                         string tema = Console.ReadLine();
+                          Console.WriteLine("\nDescripcion del capitulo: ");
+                         string descripcion = Console.ReadLine();
 
-
-                        // Console.WriteLine("Ingrese el id del curso al cual quiere agregar un capitulo: ");
-                        //  
-                        //   while (idCurso < 0 || idCurso > cursos.Count)
-                        //  {
-                        //int idCurso = Console.Read();
-                        //   }
-                        // string nombreCurso = cursos[idCurso].Nombre;
-
-                        // Console.WriteLine("\nTema del capitulo : ");
-                        // string tema = Console.ReadLine();
-                        //  Console.WriteLine("\nDescripcion del capitulo: ");
-                        // string descripcion = Console.ReadLine();
-                        // var servicioCapitulo = new ServicioCapitulo();
-                        // servicioCapitulo.Agregar(nombreCurso,tema, descripcion);
+                         var servicioCapitulo = new ServicioCapitulo();
+                         servicioCapitulo.Agregar(new Capitulo() {  CursoId = idCurso, Tema= tema, Descripcion = descripcion });
                         break;
                     case 3:
+                        //LISTAR CURSOS                    
+                        cursos = servicioCursos.ObtenerTodos();
+
+                        Console.WriteLine("\nIdCurso\tNombreCurso ");
+                        for (int i = 0; i < cursos.Count; i++)
+                        {
+                            Console.WriteLine($"\n{i}\t{cursos[i].Nombre} ");
+                        }
+
+                        int idCursoElegido;
+                        do
+                        {
+                            Console.WriteLine("\nIngrese el id del curso al cual quiere agregar una Evaluacion: ");
+                            idCursoElegido = Console.Read();
+                        } while (idCursoElegido < 0 || idCursoElegido > cursos.Count);
+
+                        char tipoEvaluacion;
+                        do
+                        {
+                            Console.WriteLine("\nCARGAR EVALUACION\nIngrese T si la evaluacion es teorica sino ingrese P para evaluaciones practicas ");
+                            tipoEvaluacion = char.ToUpper(Convert.ToChar(Console.ReadLine()));  
+                            
+                        } while (!tipoEvaluacion.Equals("T") && !tipoEvaluacion.Equals("P"));
+
+                        ServicioEvaluacion servicioEvaluacion = new ServicioEvaluacion();
+                        if (tipoEvaluacion.Equals("P"))
+                        {
+                            char condicion;
+                            do
+                            {
+                                Console.WriteLine("\nIngrese A para aprobado y D para desaprobado: ");
+                                condicion = char.ToUpper(Convert.ToChar(Console.ReadLine()));
+                            } while (!condicion.Equals("A") && !condicion.Equals("D"));
+
+                            bool aprobado = condicion == 'A' ? true : false;
+                            servicioEvaluacion.Agregar(new EvaluacionPractica() { CursoId= idCursoElegido, Aprobado = aprobado });
+
+                        }
+                        else
+                        {
+                            Console.WriteLine("\nIngrese la calificacion:");
+                            int calificacion = Console.Read();
+                            servicioEvaluacion.Agregar(new EvaluacionTeorica() { Calificacion = calificacion, CursoId = idCursoElegido });
+                        }
                         break;
+
                 }
                 leer = Console.Read();
             }
