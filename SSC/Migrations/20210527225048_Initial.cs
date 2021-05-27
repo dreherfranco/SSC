@@ -2,7 +2,7 @@
 
 namespace SSC.Migrations
 {
-    public partial class relacionesORM : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

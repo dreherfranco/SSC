@@ -9,8 +9,8 @@ using SSC.DbConfiguration;
 namespace SSC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210522020738_relacionesORM")]
-    partial class relacionesORM
+    [Migration("20210527225048_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

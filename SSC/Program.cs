@@ -11,9 +11,9 @@ namespace SSC
             Console.WriteLine("0: Mostrar Cursos \n1:Cargar un nuevo Curso \n2:Cargar Capitulos a un curso\n3:Cargar Evaluaciones a un curso \n4:Salir");
 
             
-            int leer = Console.Read();
+            int leer = int.Parse(Console.ReadLine());
             var servicioCursos = new ServicioCurso();
-            while (leer != 4)
+            while (leer >=0 || leer <= 4)
             {
                 switch (leer)
                 {
@@ -32,7 +32,7 @@ namespace SSC
                          Console.WriteLine("\nIngrese nombre del instructor: ");
                          string instructor = Console.ReadLine();
                         Console.WriteLine("\nIngrese costo del curso: ");
-                        float costo = Console.Read();
+                        float costo = float.Parse(Console.ReadLine());
 
                         servicioCursos.Agregar(new Curso() { Nombre = nombreCurso, Instructor=instructor, Costo=costo});
                         break;
@@ -49,7 +49,7 @@ namespace SSC
                         do
                         {
                             Console.WriteLine("\nIngrese el id del curso al cual quiere agregar un capitulo: ");
-                            idCurso = Console.Read();
+                            idCurso = int.Parse(Console.ReadLine());
                         } while (idCurso < 0 || idCurso > cursos.Count);
                        
                          Console.WriteLine("\nTema del capitulo : ");
@@ -74,7 +74,7 @@ namespace SSC
                         do
                         {
                             Console.WriteLine("\nIngrese el id del curso al cual quiere agregar una Evaluacion: ");
-                            idCursoElegido = Console.Read();
+                            idCursoElegido = int.Parse(Console.ReadLine());
                         } while (idCursoElegido < 0 || idCursoElegido > cursos.Count);
 
                         char tipoEvaluacion;
@@ -102,13 +102,14 @@ namespace SSC
                         else
                         {
                             Console.WriteLine("\nIngrese la calificacion:");
-                            int calificacion = Console.Read();
+                            int calificacion = int.Parse(Console.ReadLine());
                             servicioEvaluacion.Agregar(new EvaluacionTeorica() { Calificacion = calificacion, CursoId = idCursoElegido });
                         }
                         break;
 
                 }
-                leer = Console.Read();
+                Console.WriteLine("0: Mostrar Cursos \n1:Cargar un nuevo Curso \n2:Cargar Capitulos a un curso\n3:Cargar Evaluaciones a un curso \n4:Salir");
+                leer = int.Parse(Console.ReadLine());
             }
 
 
