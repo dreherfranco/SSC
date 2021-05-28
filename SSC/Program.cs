@@ -83,7 +83,7 @@ namespace SSC
                             Console.WriteLine("\nCARGAR EVALUACION\nIngrese T si la evaluacion es teorica sino ingrese P para evaluaciones practicas ");
                             tipoEvaluacion = char.ToUpper(Convert.ToChar(Console.ReadLine()));  
                             
-                        } while (!tipoEvaluacion.Equals("T") && !tipoEvaluacion.Equals("P"));
+                        } while (!tipoEvaluacion.Equals("T") || !tipoEvaluacion.Equals("P"));
 
                         ServicioEvaluacion servicioEvaluacion = new ServicioEvaluacion();
                         if (tipoEvaluacion.Equals("P"))

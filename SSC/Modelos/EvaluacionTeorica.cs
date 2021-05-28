@@ -14,6 +14,5 @@ namespace SSC.Modelos
         }
 
         public int Calificacion{ get; set; }
-        public virtual Curso Curso { get; set; }
     }
 }
