@@ -17,7 +17,7 @@ namespace SSC.DbConfiguration
 
         public ApplicationDbContext() : base() { }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            =>options.UseLazyLoadingProxies().UseSqlServer(@"Data Source=.\SQLEXPRESS_19;Initial Catalog=SSC;Integrated Security=True");
+            =>options.UseLazyLoadingProxies().UseSqlServer(@"Data Source=.\SQLEXPRESS_2019;Initial Catalog=SSC;Integrated Security=True");
 
       
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace SSC.Servicios
 {
-    public class ServicioEvaluacion: Servicio<Evaluacion>
+    public class ServicioEvaluacionPractica: Servicio<EvaluacionPractica>
     {
-        private readonly RepositorioEvaluacion Repositorio;
-        public ServicioEvaluacion()
+        private readonly RepositorioEvaluacionPractica Repositorio;
+        public ServicioEvaluacionPractica()
         {
-            Repositorio = new RepositorioEvaluacion();
+            Repositorio = new RepositorioEvaluacionPractica();
         }
 
         public  List<EvaluacionPractica> EvaluacionesPracticasDeUnCurso(string nombreCurso)
@@ -22,9 +22,6 @@ namespace SSC.Servicios
             return Repositorio.ObtenerEvaluacionesPracticasDeUnCurso(nombreCurso);
         }
 
-        public  List<EvaluacionTeorica> EvaluacionesTeoricasDeUnCurso(string nombreCurso)
-        {
-            return Repositorio.ObtenerEvaluacionesTeoricasDeUnCurso(nombreCurso);
-        }
+      
     }
 }

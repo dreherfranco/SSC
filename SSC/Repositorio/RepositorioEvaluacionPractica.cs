@@ -13,15 +13,9 @@ namespace SSC.Repositorio
         public RepositorioEvaluacionPractica() : base()
         {
         }
-     /*  public new void Agregar(EvaluacionPractica evaluacion)
-        {
-            Contexto.EvaluacionesPracticas.Add(evaluacion);
-            Contexto.SaveChangesAsync();
-        }*/
         public List<EvaluacionPractica> ObtenerEvaluacionesPracticasDeUnCurso(string nombreCurso)
         {
             return this.Contexto.EvaluacionesPracticas.Where(x => x.Curso.Nombre == nombreCurso).ToList();
-            //return this.Contexto.Evaluaciones.Where(x =>x.Curso.Nombre == nombreCurso).ToList();
         }
     }
 }

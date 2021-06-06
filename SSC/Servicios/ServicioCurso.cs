@@ -3,6 +3,7 @@ using SSC.Repositorio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -16,10 +17,5 @@ namespace SSC.Servicios
             Repositorio = new RepositorioCurso();
         }
 
-        public Curso ObtenerUnCurso(string nombreCurso)
-        {
-            return this.Repositorio.ObtenerUnCurso(nombreCurso);
-;
-        }
     }
 }

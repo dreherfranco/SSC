@@ -14,11 +14,6 @@ namespace SSC.Repositorio
         public RepositorioEvaluacionTeorica(): base()
         {
         }
-       /* public new void Agregar(EvaluacionTeorica evaluacion)
-        {
-            Contexto.EvaluacionesTeoricas.Add(evaluacion);
-            Contexto.SaveChangesAsync();
-        }*/
         public List<EvaluacionTeorica> ObtenerEvaluacionesTeoricasDeUnCurso(string nombreCurso)
         {
             return this.Contexto.EvaluacionesTeoricas.Where(x => x.Curso.Nombre == nombreCurso).ToList();
