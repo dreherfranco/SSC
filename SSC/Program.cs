@@ -8,14 +8,17 @@ namespace SSC
     {
         static void Main(string[] args)
         {
+            var servicioCursos = new ServicioCurso();
+            var php = servicioCursos.ObtenerUnCurso("Php");
+            Console.WriteLine( php.Nombre);
             Console.WriteLine("0: Mostrar Cursos \n1:Cargar un nuevo Curso \n2:Cargar Capitulos a un curso\n3:Cargar Evaluaciones a un curso\n 4: Mostrar Capitulos de un curso \n5:Salir");
 
             
             int leer = int.Parse(Console.ReadLine());
-            var servicioCursos = new ServicioCurso();
+            
             int idCursoElegido;
             ServicioCapitulo servicioCapitulo = new ServicioCapitulo();
-
+            
             while (leer >=0 || leer <= 4)
             {
                 switch (leer)

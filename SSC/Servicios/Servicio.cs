@@ -22,7 +22,7 @@ namespace SSC.Servicios
 
         public List<TEntidad> ObtenerTodos()
         {
-            return Repositorio.ObtenerTodos();
+            return Repositorio.Obtener();
         }
     }
 }

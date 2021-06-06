@@ -28,5 +28,19 @@ namespace SSC.Repositorio
             return Contexto.Set<T>().ToList();
         }
 
+        public List<T> Obtener(Expression<Func<T, bool>> filtro = null)
+        {
+            if (filtro == null)
+            {
+                return this.Contexto.Set<T>().ToList();
+            }
+            else
+            {
+                return this.Contexto.Set<T>().Where(filtro).ToList();
+            }
+           
+
+        }
+
     }
 }

@@ -11,11 +11,17 @@ namespace SSC.Servicios
 {
     public class ServicioCurso: Servicio<Curso>
     {
-        private readonly RepositorioCurso Repositorio;
+        private readonly Repositorio<Curso> Repositorio;
         public ServicioCurso()
         {
-            Repositorio = new RepositorioCurso();
+            Repositorio = new Repositorio<Curso>();
         }
 
+        public Curso ObtenerUnCurso(string nombreCurso)
+        {
+            Expression<Func<Curso, bool>> filter = x => x.Nombre == nombreCurso;
+            return this.Repositorio.Obtener(filter).FirstOrDefault();
+;
+        }
     }
 }

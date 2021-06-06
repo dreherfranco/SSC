@@ -3,6 +3,7 @@ using SSC.Repositorio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -10,15 +11,16 @@ namespace SSC.Servicios
 {
     public class ServicioCapitulo: Servicio<Capitulo>
     {
-        private readonly RepositorioCapitulo Repositorio;
+        private readonly Repositorio<Capitulo> Repositorio;
         public ServicioCapitulo()
         {
-            Repositorio = new RepositorioCapitulo();
+            Repositorio = new Repositorio<Capitulo>();
         }
 
         public List<Capitulo> CapitulosDeUnCurso(string nombreCurso)
         {
-            return this.Repositorio.ObtenerTodosLosCapitulosDeUnCurso(nombreCurso);
+            Expression<Func<Capitulo, bool>> filtro = x => x.Curso.Nombre == nombreCurso;
+            return this.Repositorio.Obtener(filtro);
         }
     }
 }
