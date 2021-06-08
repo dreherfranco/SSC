@@ -34,6 +34,12 @@ namespace SSC.DbConfiguration
                 .HasMany(x => x.EvaluacionesTeoricas)
                 .WithOne(x => x.Curso)
                 .HasForeignKey(x => x.CursoId);
+           
+            modelBuilder.Entity<Curso>()
+                .HasMany(x => x.Capitulos)
+                .WithOne(x => x.Curso)
+                .HasForeignKey(x => x.CursoId);
+
 
             modelBuilder.Entity<EvaluacionPractica>()
                 .HasKey(x => new { x.Id });

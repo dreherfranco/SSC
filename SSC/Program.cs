@@ -1,6 +1,7 @@
 ﻿using SSC.Modelos;
 using SSC.Servicios;
 using System;
+using System.Collections.Generic;
 
 namespace SSC
 {
@@ -8,29 +9,24 @@ namespace SSC
     {
         static void Main(string[] args)
         {
-            var servicioCursos = new ServicioCurso();
-            var php = servicioCursos.ObtenerUnCurso("Php");
-            Console.WriteLine( php.Nombre);
-            Console.WriteLine("0: Mostrar Cursos \n1:Cargar un nuevo Curso \n2:Cargar Capitulos a un curso\n3:Cargar Evaluaciones a un curso\n 4: Mostrar Capitulos de un curso \n5:Salir");
-
             
+            Console.WriteLine("0: Mostrar Cursos \n1:Cargar un nuevo Curso \n2:Cargar Capitulos a un curso\n3:Cargar Evaluaciones a un curso\n4: Mostrar Capitulos de un curso \n5:Mostrar todas las evaluaciones de un curso\n6:Salir\n");
             int leer = int.Parse(Console.ReadLine());
-            
-            int idCursoElegido;
-            ServicioCapitulo servicioCapitulo = new ServicioCapitulo();
-            
-            while (leer >=0 || leer <= 4)
+
+            var servicioCapitulo = new ServicioCapitulo();
+            var servicioCursos = new ServicioCurso();
+            var servicioEvaluacionPractica = new ServicioEvaluacionPractica();
+            var servicioEvaluacionTeorica = new ServicioEvaluacionTeorica();
+            List<Curso> cursos;
+            int idCurso;
+            Curso curso;
+
+            while (leer >=0 || leer <= 5)
             {
                 switch (leer)
                 {
                     case 0:
-                        
-                        var cursos = servicioCursos.ObtenerTodos();
-                        //muestro cursos
-                        foreach(var curso in cursos)
-                        {
-                            Console.WriteLine($"\nNombre curso:{curso.Nombre}\tInstructor:{curso.Instructor}");
-                        }
+                        ListarCursos();
                         break;
                     case 1:
                          Console.WriteLine("\nIngrese el nombre del curso: ");
@@ -43,21 +39,11 @@ namespace SSC
                         servicioCursos.Agregar(new Curso() { Nombre = nombreCurso, Instructor=instructor, Costo=costo});
                         break;
                     case 2:
-                        //LISTAR CURSOS                    
-                        cursos = servicioCursos.ObtenerTodos();
-                        
-                        Console.WriteLine("\nIdCurso\tNombreCurso ");
-                        for(int i=0; i<cursos.Count ;i++){
-                            Console.WriteLine($"\n{i}\t{cursos[i].Nombre} ");
-                        }
+  
+                         cursos = ListarCursos();
 
-                        int idCurso;
-                        do
-                        {
-                            Console.WriteLine("\nIngrese el id del curso al cual quiere agregar un capitulo: ");
-                            idCurso = int.Parse(Console.ReadLine());
-                        } while (idCurso < 0 || idCurso > cursos.Count);
-                       
+                        idCurso = SeleccionarId(cursos.Count);
+
                          Console.WriteLine("\nTema del capitulo : ");
                          string tema = Console.ReadLine();
                           Console.WriteLine("\nDescripcion del capitulo: ");
@@ -67,20 +53,9 @@ namespace SSC
                          servicioCapitulo.Agregar(new Capitulo() {  CursoId = idCurso, Tema= tema, Descripcion = descripcion });
                         break;
                     case 3:
-                        //LISTAR CURSOS                    
-                        cursos = servicioCursos.ObtenerTodos();
+                        cursos = ListarCursos();
 
-                        Console.WriteLine("\nIdCurso\tNombreCurso ");
-                        for (int i = 0; i < cursos.Count; i++)
-                        {
-                            Console.WriteLine($"\n{i}\t{cursos[i].Nombre} ");
-                        }
-
-                        do
-                        {
-                            Console.WriteLine("\nIngrese el id del curso al cual quiere agregar una Evaluacion: ");
-                            idCursoElegido = int.Parse(Console.ReadLine());
-                        } while (idCursoElegido < 0 || idCursoElegido > cursos.Count);
+                        idCurso = SeleccionarId(cursos.Count);
 
                         char tipoEvaluacion;
                         do
@@ -102,8 +77,8 @@ namespace SSC
 
                             bool aprobado = condicion == 'A' ? true : false;
 
-                            ServicioEvaluacionPractica servicioEvaluacionPractica = new ServicioEvaluacionPractica();
-                            servicioEvaluacionPractica.Agregar(new EvaluacionPractica() { CursoId= idCursoElegido, Aprobado = aprobado });
+                            
+                            servicioEvaluacionPractica.Agregar(new EvaluacionPractica() { CursoId= idCurso, Aprobado = aprobado });
 
                         }
                         else
@@ -111,42 +86,77 @@ namespace SSC
                             Console.WriteLine("\nIngrese la calificacion:");
                             int calificacion = int.Parse(Console.ReadLine());
 
-                            ServicioEvaluacionTeorica servicioEvaluacionTeorica = new ServicioEvaluacionTeorica();
-                            servicioEvaluacionTeorica.Agregar(new EvaluacionTeorica() { Calificacion = calificacion, CursoId = idCursoElegido });
+                           
+                            servicioEvaluacionTeorica.Agregar(new EvaluacionTeorica() { Calificacion = calificacion, CursoId = idCurso });
                         }
                         break;
                     case 4:
-                        //LISTAR CURSOS                    
-                        cursos = servicioCursos.ObtenerTodos();
+                        cursos = ListarCursos();
 
-                        Console.WriteLine("\nIdCurso\tNombreCurso ");
-                        for (int i = 0; i < cursos.Count; i++)
-                        {
-                            Console.WriteLine($"\n{i}\t{cursos[i].Nombre} ");
-                        }
+                        idCurso = SeleccionarId(cursos.Count);
+                        curso = cursos.Find(x => x.Id == idCurso);
 
-                        do
-                        {
-                            Console.WriteLine("\n\nIngrese el id del curso para ver sus capitulos: ");
-                            idCursoElegido = int.Parse(Console.ReadLine());
-                        } while (idCursoElegido < 0 || idCursoElegido > cursos.Count);
+                        var capitulos = servicioCapitulo.CapitulosDeUnCurso(curso.Nombre);
 
-                        var capitulos = servicioCapitulo.CapitulosDeUnCurso(cursos[idCursoElegido].Nombre);
                         foreach (var capitulo in capitulos)
                         {
                             Console.WriteLine($"\nTEMA: {capitulo.Tema}\t DESCRIPCION: {capitulo.Descripcion}");
                         }
                         break;
                     case 5:
-                        
+                        cursos = ListarCursos();
+
+                        idCurso = SeleccionarId(cursos.Count);
+                        curso = cursos.Find(x => x.Id == idCurso);
+
+                        var evaluacionesTeoricas = servicioEvaluacionTeorica.EvaluacionesTeoricasDeUnCurso(curso.Nombre);
+
+                        Console.WriteLine($"\nEvaluaciones teoricas del curso {cursos[idCurso].Nombre}");
+                        foreach(var evaluacion in evaluacionesTeoricas)
+                        {
+                            Console.WriteLine($"\nNumero de Evaluacion: {evaluacion.NumeroEvaluacion}\t Calificacion: {evaluacion.Calificacion}");
+                        }
+
+                        var evaluacionesPracticas = servicioEvaluacionPractica.EvaluacionesPracticasDeUnCurso(curso.Nombre);
+                        Console.WriteLine($"\nEvaluaciones practicas del curso {cursos[idCurso].Nombre}");
+                        foreach (var evaluacion in evaluacionesPracticas)
+                        {
+                            Console.WriteLine($"\nNumero de Evaluacion: {evaluacion.NumeroEvaluacion}\t Aprobado: { (evaluacion.Aprobado ? "Si" : "No") }");
+                        }
 
                         break;
                 }
-                Console.WriteLine("\n0: Mostrar Cursos \n1:Cargar un nuevo Curso \n2:Cargar Capitulos a un curso\n3:Cargar Evaluaciones a un curso \n4:Salir");
-                leer = int.Parse(Console.ReadLine());
+                Console.WriteLine("0: Mostrar Cursos \n1:Cargar un nuevo Curso \n2:Cargar Capitulos a un curso\n3:Cargar Evaluaciones a un curso\n4: Mostrar Capitulos de un curso \n5:Mostrar todas las evaluaciones de un curso\n6:Salir\n");                leer = int.Parse(Console.ReadLine());
             }
 
 
         }
+
+
+        private static List<Curso> ListarCursos()
+        {
+            var servicioCursos = new ServicioCurso();
+            var cursos = servicioCursos.ObtenerTodos();
+            Console.WriteLine("\nIdCurso\tNombreCurso\tInstructor ");
+            for (int i = 0; i < cursos.Count; i++)
+            {
+                Console.WriteLine($"\n{cursos[i].Id}\t{cursos[i].Nombre}\t{cursos[i].Instructor} ");
+            }
+            return cursos;
+        }
+
+        private static int SeleccionarId(int cantidadCursos)
+        {
+            int idCursoElegido;
+            do
+            {
+                Console.WriteLine("\nIngrese el id del curso : ");
+                idCursoElegido = int.Parse(Console.ReadLine());
+            } while (idCursoElegido < 0 || idCursoElegido > cantidadCursos);
+
+            return idCursoElegido;
+
+        }
     }
+
 }

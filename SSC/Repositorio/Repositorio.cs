@@ -23,11 +23,6 @@ namespace SSC.Repositorio
             Contexto.SaveChangesAsync();
         }
 
-        public List<T> ObtenerTodos()
-        { 
-            return Contexto.Set<T>().ToList();
-        }
-
         public List<T> Obtener(Expression<Func<T, bool>> filtro = null)
         {
             if (filtro == null)
