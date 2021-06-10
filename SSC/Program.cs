@@ -126,7 +126,7 @@ namespace SSC
 
                         break;
                 }
-                Console.WriteLine("0: Mostrar Cursos \n1:Cargar un nuevo Curso \n2:Cargar Capitulos a un curso\n3:Cargar Evaluaciones a un curso\n4: Mostrar Capitulos de un curso \n5:Mostrar todas las evaluaciones de un curso\n6:Salir\n");                leer = int.Parse(Console.ReadLine());
+                Console.WriteLine("\n0: Mostrar Cursos \n1:Cargar un nuevo Curso \n2:Cargar Capitulos a un curso\n3:Cargar Evaluaciones a un curso\n4: Mostrar Capitulos de un curso \n5:Mostrar todas las evaluaciones de un curso\n6:Salir\n");                leer = int.Parse(Console.ReadLine());
             }
 
 
