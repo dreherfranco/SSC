@@ -15,9 +15,12 @@ namespace SSC.DbConfiguration
         public DbSet<EvaluacionPractica> EvaluacionesPracticas { get; set; }
         public DbSet<EvaluacionTeorica> EvaluacionesTeoricas { get; set; }
 
-        public ApplicationDbContext() : base() { }
+        public ApplicationDbContext() : base() 
+        {
+            Database.EnsureCreated();
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            =>options.UseLazyLoadingProxies().UseSqlServer(@"Data Source=.\SQLEXPRESS_2019;Initial Catalog=SSC;Integrated Security=True");
+            =>options.UseLazyLoadingProxies().UseSqlite(@"Data Source=SSC.db");
 
       
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -2,7 +2,7 @@
 
 namespace SSC.Migrations
 {
-    public partial class Initial : Migration
+    public partial class sqlite : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -10,11 +10,11 @@ namespace SSC.Migrations
                 name: "Cursos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Instructor = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Costo = table.Column<float>(type: "real", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Nombre = table.Column<string>(type: "TEXT", nullable: true),
+                    Instructor = table.Column<string>(type: "TEXT", nullable: true),
+                    Costo = table.Column<float>(type: "REAL", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -25,11 +25,11 @@ namespace SSC.Migrations
                 name: "Capitulos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CursoId = table.Column<int>(type: "int", nullable: false),
-                    Tema = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CursoId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Tema = table.Column<string>(type: "TEXT", nullable: true),
+                    Descripcion = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,11 +46,11 @@ namespace SSC.Migrations
                 name: "EvaluacionesPracticas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Aprobado = table.Column<bool>(type: "bit", nullable: false),
-                    NumeroEvaluacion = table.Column<int>(type: "int", nullable: false),
-                    CursoId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Aprobado = table.Column<bool>(type: "INTEGER", nullable: false),
+                    NumeroEvaluacion = table.Column<int>(type: "INTEGER", nullable: false),
+                    CursoId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -67,11 +67,11 @@ namespace SSC.Migrations
                 name: "EvaluacionesTeoricas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Calificacion = table.Column<int>(type: "int", nullable: false),
-                    NumeroEvaluacion = table.Column<int>(type: "int", nullable: false),
-                    CursoId = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Calificacion = table.Column<int>(type: "INTEGER", nullable: false),
+                    NumeroEvaluacion = table.Column<int>(type: "INTEGER", nullable: false),
+                    CursoId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -97,12 +97,17 @@ namespace SSC.Migrations
             migrationBuilder.InsertData(
                 table: "Capitulos",
                 columns: new[] { "Id", "CursoId", "Descripcion", "Tema" },
-                values: new object[,]
-                {
-                    { 1, 1, "capitulo 1 del curso de net core", "POO" },
-                    { 2, 1, "capitulo 2 del curso de net core", "AutoMapper" },
-                    { 3, 2, "cap 1 curso PHP", "Variables" }
-                });
+                values: new object[] { 1, 1, "capitulo 1 del curso de net core", "POO" });
+
+            migrationBuilder.InsertData(
+                table: "Capitulos",
+                columns: new[] { "Id", "CursoId", "Descripcion", "Tema" },
+                values: new object[] { 2, 1, "capitulo 2 del curso de net core", "AutoMapper" });
+
+            migrationBuilder.InsertData(
+                table: "Capitulos",
+                columns: new[] { "Id", "CursoId", "Descripcion", "Tema" },
+                values: new object[] { 3, 2, "cap 1 curso PHP", "Variables" });
 
             migrationBuilder.InsertData(
                 table: "EvaluacionesPracticas",
